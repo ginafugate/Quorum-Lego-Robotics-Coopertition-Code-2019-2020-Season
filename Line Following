@@ -1,0 +1,28 @@
+use Libraries.Robots.Lego.Motor
+use Libraries.Robots.Lego.ColorSensor
+use Libraries.Robots.Lego.Screen
+
+class Main
+  action Main
+    // follows line from the top left to botom left
+    Motor motor
+    ColorSensor color
+    Screen screen
+    color:SetPort(2)
+    number light = 0.8
+    number dark = 0.1
+    number factor = 30
+
+    motor:ResetRotation(“C")       // This will set the motor's rotation memory to 0, without moving the motor
+    // This will loop until motor C has rotated 1000 degrees. Set this number to whatever you need
+    repeat while motor:GetRotation(“C") < 1000
+        number c = color:GetReflectionLevel()
+        number left = (c - dark)*factor
+        number right = (light - c)*factor
+        motor:SetSpeed("C", cast(integer, left))
+        motor:SetSpeed("B", cast(integer, right))
+        motor:RotateForward("B")
+        motor:RotateForward("C")
+        screen:ScrollUp("Reflectivity: " + c)
+    end     
+end
