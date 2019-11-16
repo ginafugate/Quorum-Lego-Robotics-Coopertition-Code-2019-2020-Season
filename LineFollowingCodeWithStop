@@ -1,0 +1,24 @@
+use Libraries.Robots.Lego.Motor
+use Libraries.Robots.Lego.ColorSensor
+use Libraries.Robots.Lego.Screen
+
+action Main
+    // follows line from the top left to botom left
+    Motor motor
+    ColorSensor color
+    Screen screen
+    color:SetPort(2)
+    number light = 0.8
+    number dark = 0.1
+    number factor = 40  //impacts speed
+    repeat 764 times  //repeats equation simultaneously
+        number c = color:GetReflectionLevel()
+        number left = (c - dark)*factor
+        number right = (light - c)*factor
+        motor:SetSpeed("C", cast(integer, left))
+        motor:SetSpeed("B", cast(integer, right))
+        motor:RotateForward("B")
+        motor:RotateForward("C")
+        screen:ScrollUp("Reflectivity: " + c)
+    end     
+end 
