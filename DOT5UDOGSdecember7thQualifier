@@ -29,38 +29,23 @@ action Crane()
     Motor motor
     Utility utility
 
-    motor:SetSpeed(motor:MOTOR_B, 50)
-    motor:SetSpeed(motor:MOTOR_C, 50)
-    motor:RotateForward(motor:MOTOR_B)
-    motor:RotateForward(motor:MOTOR_C)
-    utility:DelayMilliseconds(3500)
-    motor:Stop(motor:MOTOR_B)
-    motor:Stop(motor:MOTOR_C)
+    DriveTime(50, 3500)
 
     motor:SetSpeed(motor:MOTOR_A, 60)
     motor:RotateByDegrees(motor:MOTOR_A, 120)
     motor:Wait(motor:MOTOR_A)
     motor:Stop(motor:MOTOR_A)
 
-    motor:SetSpeed(motor:MOTOR_B, 50)
-    motor:SetSpeed(motor:MOTOR_C, 50)
-    motor:RotateBackward(motor:MOTOR_B)
-    motor:RotateBackward(motor:MOTOR_C)
-    utility:DelayMilliseconds(500)
-    motor:Stop(motor:MOTOR_B)
-    motor:Stop(motor:MOTOR_C)
+    DriveTime(-50, 500)
 
     repeat 2 times
-    motor:ResetRotation(motor:MOTOR_C)
-    motor:RotateBackward(motor:MOTOR_C)
-    utility:DelayMilliseconds(500)
-    motor:Stop(motor:MOTOR_C)
-    motor:RotateBackward(motor:MOTOR_B)
-    motor:RotateBackward(motor:MOTOR_C)
-    utility:DelayMilliseconds(3500)
-    motor:Stop(motor:MOTOR_B)
-    motor:Stop(motor:MOTOR_C)
-end
+        motor:ResetRotation(motor:MOTOR_C)
+        motor:RotateBackward(motor:MOTOR_C)
+        utility:DelayMilliseconds(500)
+        motor:Stop(motor:MOTOR_C)
+
+        DriveTime(-50, 3500)
+    end
 end 
 
 action Bridge()
@@ -130,6 +115,19 @@ action StopOnColor (text stopcolor)
     utility:DelayMilliseconds(7000)
     motor:Stop("B")
     motor:Stop("C")
+end
+
+action DriveTime(integer speed, integer ms)
+    Motor motor
+    Utility utility
+
+    motor:SetSpeed(motor:MOTOR_B, speed)
+    motor:SetSpeed(motor:MOTOR_C, speed)
+    motor:RotateForward(motor:MOTOR_B)
+    motor:RotateForward(motor:MOTOR_C)
+    utility:DelayMilliseconds(ms)
+    motor:Stop(motor:MOTOR_B)
+    motor:Stop(motor:MOTOR_C)
 end
 
 action Swing()   
