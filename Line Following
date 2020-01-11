@@ -13,9 +13,9 @@ class Main
     number dark = 0.1
     number factor = 30
 
-    motor:ResetRotation(“C")       // This will set the motor's rotation memory to 0, without moving the motor
+    motor:ResetRotation("C")       // This will set the motor's rotation memory to 0, without moving the motor
     // This will loop until motor C has rotated 1000 degrees. Set this number to whatever you need
-    repeat while motor:GetRotation(“C") < 1000
+    repeat while motor:GetRotation("C") < 1000
         number c = color:GetReflectionLevel()
         number left = (c - dark)*factor
         number right = (light - c)*factor
